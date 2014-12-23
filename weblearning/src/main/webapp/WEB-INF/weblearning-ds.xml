@@ -19,6 +19,16 @@
 		in META-INF/persistence.xml -->
 	<datasource jta="true" jndi-name="java:jboss/datasources/weblearningDS"
 		pool-name="webLearningDS_Pool" enabled="true" use-java-context="true">
+		<connection-url>jdbc:hsqldb:file:/opt/hsqldb-2.3.2/database/weblearning_db];shutdown=true</connection-url>
+		<driver>hsqldb</driver>
+		<security>
+			<user-name>weblearning</user-name>
+			<password>weblearning</password>
+		</security>
+	</datasource>
+	<!-- dla ORACLE
+	<datasource jta="true" jndi-name="java:jboss/datasources/weblearningDS"
+		pool-name="webLearningDS_Pool" enabled="true" use-java-context="true">
 		<connection-url>jdbc:oracle:thin:@192.168.58.101:1521:orcl</connection-url>
 		<driver>oracle</driver>
 		<pool>
@@ -34,5 +44,5 @@
 			<background-validation>false</background-validation>
 		</validation>
 	</datasource>
+	 -->
 </datasources>
- 
