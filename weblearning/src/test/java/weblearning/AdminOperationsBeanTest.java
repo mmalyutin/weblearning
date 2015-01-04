@@ -60,12 +60,4 @@ public class AdminOperationsBeanTest {
 		Assert.assertNotNull(teacher.getId());
 		logger.info(teacher.getNickName() + " was persisted with id " + teacher.getId());
 	}
-	
-	@Test
-	public void testCreateSubject() {
-		Teacher teacher = adminOperations.createTeacher("ts_firstName", "ts_lastName", "ts_nickName", "ts_password");
-		Subject subject = adminOperations.createSubject(teacher, "name", "description");
-		Assert.assertNotNull(subject.getId());
-		logger.info(subject.getName() + " was persisted with id + " + subject.getId());
-	}
 }

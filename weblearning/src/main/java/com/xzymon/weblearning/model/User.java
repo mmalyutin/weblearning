@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,9 +18,14 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
+
+import com.xzymon.weblearning.model.util.UserType;
 
 @Entity
 @Table(name="USERS")
@@ -97,6 +103,23 @@ public abstract class User implements Serializable{
 	 */
 	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
+	}
+
+	@Transient
+	public UserType getTypeFromDiscriminatorValue(){
+		String typeString = null;
+		UserType result = UserType.Student;
+		DiscriminatorValue val = this.getClass().getAnnotation(DiscriminatorValue.class);
+		
+		typeString = val == null ? null : val.value();
+		switch(typeString){
+		case "Admin": result = UserType.Admin;
+			break;
+		case "Teacher": result = UserType.Student;
+			break;
+		default:
+		}
+		return result;
 	}
 	
 	@Override

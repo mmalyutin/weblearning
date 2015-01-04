@@ -1,8 +1,9 @@
 package weblearning;
 
+import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 
-import org.apache.log4j.Logger;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -52,7 +53,15 @@ public class UserOperationsBeanTest {
 		byte[] binData = new byte[]{0x65, 0x66, 0x67, 0x68};
 		Doc doc = userOperations.createDoc("example.txt", "text/plain", binData, user);
 		Assert.assertNotNull(doc.getId());
+		Assert.assertEquals((Integer)4, doc.getFileLength());
 		logger.info(doc.getFileName() + " was persisted with id + " + doc.getId());
+	}
+	
+	public void testRemoveDoc(){
+		byte[] binData = new byte[]{0x65, 0x66, 0x67, 0x68};
+		Doc doc = userOperations.createDoc("example.txt", "text/plain", binData, user);
+		logger.info(doc.getFileName() + " was persisted with id + " + doc.getId());
+		
 	}
 
 }
