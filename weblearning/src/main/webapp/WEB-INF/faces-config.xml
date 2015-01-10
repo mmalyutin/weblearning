@@ -39,4 +39,73 @@
 			<var>msgs</var>
 		</resource-bundle>
 	</application>
+	
+	<navigation-rule>
+		<from-view-id>/docs/list.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>create</from-outcome>
+			<to-view-id>/docs/create.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/docs/create.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>list</from-outcome>
+			<to-view-id>/docs/list.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/users/list.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>create</from-outcome>
+			<to-view-id>/users/create.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/users/create.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>list</from-outcome>
+			<to-view-id>/users/list.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/subjects/list.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>create</from-outcome>
+			<to-view-id>/subjects/create.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/subjects/create.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>list</from-outcome>
+			<to-view-id>/subjects/list.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>docs</from-outcome>
+			<to-view-id>/docs/list.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>subjects</from-outcome>
+			<to-view-id>/subjects/list.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>users</from-outcome>
+			<to-view-id>/users/list.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 </faces-config>

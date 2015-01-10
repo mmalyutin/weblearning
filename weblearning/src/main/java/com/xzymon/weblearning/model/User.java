@@ -26,6 +26,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import com.xzymon.weblearning.model.util.UserType;
+import com.xzymon.weblearning.util.HashUtils;
 
 @Entity
 @Table(name="USERS")
@@ -46,7 +47,7 @@ public abstract class User implements Serializable{
 	private String lastName;
 	@Column(name="NICK", unique=true, nullable=false, updatable=false, length=32)
 	private String nickName;
-	@Column(name="PASSWORD", length=43, nullable=false)
+	@Column(name="PASSWORD", length=44, nullable=false)
 	private String passwordHash;
 	@OneToMany(mappedBy="owner", cascade={CascadeType.ALL})
 	private Set<Doc> docs = new HashSet<Doc>();
@@ -101,8 +102,16 @@ public abstract class User implements Serializable{
 	 * Ustawia hash hasla - 
 	 * @param passwordHash
 	 */
-	public void setPasswordHash(String passwordHash) {
-		this.passwordHash = passwordHash;
+	public void setPasswordHash(String password) {
+		this.passwordHash = HashUtils.getSHA256HashAsBase64String(password);
+	}
+	
+	public Set<Doc> getDocs() {
+		return docs;
+	}
+	
+	public void setDocs(Set<Doc> docs) {
+		this.docs = docs;
 	}
 
 	@Transient
@@ -115,11 +124,16 @@ public abstract class User implements Serializable{
 		switch(typeString){
 		case "Admin": result = UserType.Admin;
 			break;
-		case "Teacher": result = UserType.Student;
+		case "Teacher": result = UserType.Teacher;
 			break;
 		default:
 		}
 		return result;
+	}
+	
+	@Transient
+	public String getNameString(){
+		return String.format("%1$s %2$s", lastName, firstName);
 	}
 	
 	@Override

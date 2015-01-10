@@ -17,11 +17,11 @@ import com.xzymon.weblearning.model.User;
 
 @Stateless
 @Local(AdminOperationsLocal.class)
-public class AdminOperationsBean implements AdminOperationsLocal{
+public class AdminOperationsBean implements AdminOperationsLocal {
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Override
 	public Admin createAdmin(String firstName, String lastName,
 			String nickName, String password) {
@@ -33,10 +33,10 @@ public class AdminOperationsBean implements AdminOperationsLocal{
 		em.persist(admin);
 		return admin;
 	}
-	
+
 	@Override
-	public Student createStudent(String firstName, String lastName, 
-			String nickName, String password){
+	public Student createStudent(String firstName, String lastName,
+			String nickName, String password) {
 		Student student = new Student();
 		student.setFirstName(firstName);
 		student.setLastName(lastName);
@@ -45,7 +45,7 @@ public class AdminOperationsBean implements AdminOperationsLocal{
 		em.persist(student);
 		return student;
 	}
-	
+
 	@Override
 	public Teacher createTeacher(String firstName, String lastName,
 			String nickName, String password) {
@@ -60,8 +60,10 @@ public class AdminOperationsBean implements AdminOperationsLocal{
 
 	@Override
 	public void removeUser(User toRemove) {
-		em.remove(toRemove);
-		
+		User merged = em.merge(toRemove);
+		if (merged != null) {
+			em.remove(merged);
+		}
 	}
 
 	@Override
@@ -73,14 +75,16 @@ public class AdminOperationsBean implements AdminOperationsLocal{
 
 	@Override
 	public List<Student> listStudents() {
-		TypedQuery<Student> tquery = em.createQuery("from Student", Student.class);
+		TypedQuery<Student> tquery = em.createQuery("from Student",
+				Student.class);
 		List<Student> list = tquery.getResultList();
 		return list;
 	}
 
 	@Override
 	public List<Teacher> listTeachers() {
-		TypedQuery<Teacher> tquery = em.createQuery("from Teacher", Teacher.class);
+		TypedQuery<Teacher> tquery = em.createQuery("from Teacher",
+				Teacher.class);
 		List<Teacher> list = tquery.getResultList();
 		return list;
 	}
@@ -94,52 +98,56 @@ public class AdminOperationsBean implements AdminOperationsLocal{
 
 	@Override
 	public Admin findAdmin(Long id) {
-		TypedQuery<Admin> tquery = em.createQuery("from Admin a where a.id=:id", Admin.class);
+		TypedQuery<Admin> tquery = em.createQuery(
+				"from Admin a where a.id=:id", Admin.class);
 		tquery.setParameter("id", id);
 		Admin admin = null;
-		try{
+		try {
 			admin = tquery.getSingleResult();
-		} catch(NoResultException ex){
-			
+		} catch (NoResultException ex) {
+
 		}
 		return admin;
 	}
 
 	@Override
 	public Student findStudent(Long id) {
-		TypedQuery<Student> tquery = em.createQuery("from Student s where s.id=:id", Student.class);
+		TypedQuery<Student> tquery = em.createQuery(
+				"from Student s where s.id=:id", Student.class);
 		tquery.setParameter("id", id);
 		Student student = null;
-		try{
+		try {
 			student = tquery.getSingleResult();
-		} catch(NoResultException ex){
-			
+		} catch (NoResultException ex) {
+
 		}
 		return student;
 	}
 
 	@Override
 	public Teacher findTeacher(Long id) {
-		TypedQuery<Teacher> tquery = em.createQuery("from Teacher t where t.id=:id", Teacher.class);
+		TypedQuery<Teacher> tquery = em.createQuery(
+				"from Teacher t where t.id=:id", Teacher.class);
 		tquery.setParameter("id", id);
 		Teacher teacher = null;
-		try{
+		try {
 			teacher = tquery.getSingleResult();
-		} catch(NoResultException ex){
-			
+		} catch (NoResultException ex) {
+
 		}
 		return teacher;
 	}
 
 	@Override
 	public User findUser(Long id) {
-		TypedQuery<User> tquery = em.createQuery("from User u where u.id=:id", User.class);
+		TypedQuery<User> tquery = em.createQuery("from User u where u.id=:id",
+				User.class);
 		tquery.setParameter("id", id);
 		User user = null;
-		try{
+		try {
 			user = tquery.getSingleResult();
-		} catch(NoResultException ex){
-			
+		} catch (NoResultException ex) {
+
 		}
 		return user;
 	}
